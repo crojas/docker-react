@@ -5,3 +5,17 @@ before_install:
   - docker build -t crojasla/docker-react -f Dockerfile.development .
 script:
   - docker run crojasla/docker-react npm run test -- --coverage
+
+deploy:
+  provider: elasticbeanstalk
+  region: "us-west-1"
+  app: "docker-react"
+  env: "DockerReact-env"
+  bucket_name: "elasticbeanstalk-us-west-1-239630721544"
+  bucket_path: "docker-react"
+  on:
+    branch: master
+  access_key_id:
+    secure: "$AWS_ACCESS_KEY"
+  secret_access_key:
+    secure: "$SECRET_ACCESS_KEY"
